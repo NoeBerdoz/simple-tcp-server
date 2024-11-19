@@ -9,22 +9,23 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class SimpleClient {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         String host = "127.0.0.1";
         int port = 8090;
 
+        // try-with-resources block, automatically closes resources when done.
         try (
             Socket socket = new Socket(host, port);
 
-            // "serverOutput" will send user input to the server line by line.
+            // open an output stream, will send user input to the server line by line.
             // Auto-flush is enabled for immediate delivery.
             PrintWriter writeToServer = new PrintWriter(socket.getOutputStream(), true);
 
-            // "serverInput" reads responses from the server, one line at a time.
+            // open an input stream, reads responses from the server, one line at a time.
             BufferedReader readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            // Reads input that the user is making in the console
+            // open an input stream, reads input that the user is making in the console.
             BufferedReader readFromUser = new BufferedReader(new InputStreamReader(System.in))
         ) {
             String userInput;
