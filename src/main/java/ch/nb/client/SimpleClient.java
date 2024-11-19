@@ -16,17 +16,17 @@ public class SimpleClient {
 
         // try-with-resources block, automatically closes resources when done.
         try (
-            Socket socket = new Socket(host, port);
+                Socket socket = new Socket(host, port);
 
-            // open an output stream, will send user input to the server line by line.
-            // Auto-flush is enabled for immediate delivery.
-            PrintWriter writeToServer = new PrintWriter(socket.getOutputStream(), true);
+                // open an output stream, will send user input to the server line by line.
+                // Auto-flush is enabled for immediate delivery.
+                PrintWriter writeToServer = new PrintWriter(socket.getOutputStream(), true);
 
-            // open an input stream, reads responses from the server, one line at a time.
-            BufferedReader readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                // open an input stream, reads responses from the server, one line at a time.
+                BufferedReader readFromServer = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 
-            // open an input stream, reads input that the user is making in the console.
-            BufferedReader readFromUser = new BufferedReader(new InputStreamReader(System.in))
+                // open an input stream, reads input that the user is making in the console.
+                BufferedReader readFromUser = new BufferedReader(new InputStreamReader(System.in))
         ) {
             String userInput;
             while ((userInput = readFromUser.readLine()) != null) {
