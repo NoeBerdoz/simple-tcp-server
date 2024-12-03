@@ -27,15 +27,18 @@ public class MovieService {
 
     public Movie getMovieDetailsBytmdbMovieId(Long tmdbMovieId) {
         try {
-            Optional<Movie> movieFromDatabase = movieMapper.selectById(tmdbMovieId);
+
+            // Retrieve the movie from the database if it exists
+            Optional<Movie> movieFromDatabase = movieMapper.selectByTmdbMovieId(tmdbMovieId);
             if (movieFromDatabase.isPresent()) {
                 return movieFromDatabase.get();
             }
 
+            // Retrieve the movie from the API and adds it to the database
             String movieDetails = MovieApiService.getMovieDetails(tmdbMovieId);
             Movie movieFromApi = MovieJsonService.mapJsonToMovie(movieDetails);
-
             addMovie(movieFromApi);
+
             return movieFromApi;
 
         } catch (Exception e) {
@@ -44,6 +47,11 @@ public class MovieService {
         }
     }
 
+    /**
+     * Adds a movie to the database
+     *
+     * @param movie the movie to add
+     */
     public void addMovie(Movie movie) {
         try {
             movieMapper.insert(movie);

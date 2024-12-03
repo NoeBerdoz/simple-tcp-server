@@ -59,6 +59,7 @@ public class MovieMapper implements Mapper<Movie> {
             ResultSet resultSet = preparedStatement.executeQuery();
 
             if (resultSet.next()) {
+                SimpleLogger.info("[DB][SELECT] MOVIE BY TMDB_MOVIE_ID: " + tmdbMovieid);
                 return Optional.of(mapRowToObject(resultSet));
             }
 

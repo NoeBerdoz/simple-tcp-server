@@ -1,5 +1,7 @@
 package ch.nb.server;
 
+import ch.nb.api.business.Movie;
+import ch.nb.api.service.MovieService;
 import ch.nb.utils.SimpleLogger;
 
 import java.io.BufferedReader;
@@ -30,15 +32,19 @@ public class SimpleServerThread extends Thread {
                  InputStreamReader handles the conversion from bytes to characters
                 */
                 BufferedReader readFromClient = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+
         ) {
             SimpleLogger.info("[+] New thread initialized");
+            MovieService movieService = MovieService.getInstance();
 
             String clientInput;
             while ((clientInput = readFromClient.readLine()) != null) {
                 SimpleLogger.info("[+] New client request: " + clientInput);
 
+                Movie requestedMovie = movieService.getMovieDetailsBytmdbMovieId(Long.parseLong(clientInput));
+
                 // Send a response back to the client
-                writeToClient.println("The number of characters of the given string is: " + clientInput.length());
+                writeToClient.println("Movie Title: " + requestedMovie.getTitle()  + " Movie Budget: " + requestedMovie.formatCurrency(requestedMovie.getBudget()));
 
                 if (clientInput.equals("exit")) {
                     SimpleLogger.warning("[+] Closing connection : " + clientInput);
