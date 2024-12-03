@@ -1,7 +1,7 @@
 package ch.nb.utils;
 
-import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 /**
@@ -13,17 +13,17 @@ public class PropertiesLoader {
     private Properties properties;
 
     /**
-     * Initializes the PropertiesLoader with the specified file path and loads properties.
+     * Initializes the PropertiesLoader with the specified file name and loads properties.
      *
-     * @param filePath the path to the properties file
+     * @param fileName the path to the properties file
      * @throws RuntimeException if the properties file cannot be loaded
      */
-    public PropertiesLoader(String filePath) {
+    public PropertiesLoader(String fileName) {
         properties = new Properties();
-        try (FileInputStream file = new FileInputStream(filePath)) {
+        try (InputStream file = getClass().getClassLoader().getResourceAsStream(fileName)) {
             properties.load(file);
         } catch (IOException error) {
-            System.err.println("[-] Failed to load properties file: " + filePath);
+            System.err.println("[-] Failed to load properties file: " + fileName);
             throw new RuntimeException("Properties file loading error: " + error.getMessage());        }
     }
 
