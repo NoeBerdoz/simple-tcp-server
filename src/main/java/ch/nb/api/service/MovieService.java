@@ -47,6 +47,11 @@ public class MovieService {
         }
     }
 
+    // TODO Implement the method getMovieDetailsByTitle
+    public Movie getMovieDetailsByTitle(String title) {
+        return null;
+    }
+
     /**
      * Adds a movie to the database
      *
